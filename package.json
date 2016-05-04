@@ -1,11 +1,11 @@
 {
-  "name": "http-server",
+  "name": "cubx-http-server",
   "version": "0.8.5",
-  "description": "A simple zero-configuration command-line http server",
+  "description": "A command line http-server based on the popular http-server npm module extended to be able to add a toProxy.",
   "main": "./lib/http-server",
   "repository": {
     "type": "git",
-    "url": "git://github.com/indexzero/http-server.git"
+    "url": "https://github.com/cubbles/cubx-http-server"
   },
   "keywords": [
     "cli",
@@ -55,6 +55,10 @@
     {
       "name": "Jinkwon Lee",
       "email": "master@bdyne.net"
+    },
+    {
+      "name": "Philipp Wagner",
+      "email": "philipp.wagner@incowia.com"
     }
   ],
   "dependencies": {
@@ -65,7 +69,8 @@
     "http-proxy": "^1.8.1",
     "portfinder": "0.4.x",
     "opener": "~1.4.0",
-    "corser": "~2.0.0"
+    "corser": "~2.0.0",
+    "global-tunnel": "^1.2.0"
   },
   "devDependencies": {
     "common-style": "^3.0.0",
@@ -73,12 +78,12 @@
     "vows": "0.7.x"
   },
   "bugs": {
-    "url": "https://github.com/nodeapps/http-server/issues"
+    "url": "https://github.com/cubbles/cubx-http-server/issues"
   },
   "license": "MIT",
   "preferGlobal": "true",
   "bin": {
-    "http-server": "./bin/http-server",
-    "hs": "./bin/http-server"
+    "cubx-http-server": "./bin/http-server",
+    "chs": "./bin/http-server"
   }
 }
