@@ -1,6 +1,6 @@
 # cubx-http-server: a command-line http server
 
-`cubx-http-server` is a simple, zero-configuration command-line http server based in the popoular [`http-server`](https://www.npmjs.com/package/http-server) npm package.
+`cubx-http-server` is a simple, zero-configuration command-line http server based on the popoular [`http-server`](https://www.npmjs.com/package/http-server) npm package.
 
 # Installing globally:
 
@@ -16,27 +16,13 @@ This will install `cubx-http-server` globally so that it may be run from the com
 
 `[path]` defaults to `./public` if the folder exists, and `./` otherwise.
 
-# Installing as a node app
-
-     mkdir myapp
-     cd myapp/
-     jitsu install cubx-http-server
-
-*If you do not have `jitsu` installed you can install it via `npm install jitsu -g`*
-
 ## Usage
 
-### Starting http-server locally
+### Starting cubx-http-server locally
 
      node bin/cubx-http-server
 
 *Now you can visit http://localhost:8080 to view your server*
-
-### Deploy http-server to nodejitsu
-
-     jitsu deploy
-
-*You will now be prompted for a `subdomain` to deploy your application on*
 
 ## Available Options:
 
