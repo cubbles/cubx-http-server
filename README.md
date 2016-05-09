@@ -1,20 +1,18 @@
-# http-server: a command-line http server
+# cubx-http-server: a command-line http server
 
-`http-server` is a simple, zero-configuration command-line http server.  It is powerful enough for production usage, but it's simple and hackable enough to be used for testing, local development, and learning.
-
-![](https://github.com/nodeapps/http-server/raw/master/screenshots/public.png)
+`cubx-http-server` is a simple, zero-configuration command-line http server based in the popoular [`http-server`](https://www.npmjs.com/package/http-server) npm package.
 
 # Installing globally:
 
 Installation via `npm`:
 
-     npm install http-server -g
+     npm install cubx-http-server -g
 
-This will install `http-server` globally so that it may be run from the command line.
+This will install `cubx-http-server` globally so that it may be run from the command line.
 
 ## Usage:
 
-     http-server [path] [options]
+     cubx-http-server [path] [options]
 
 `[path]` defaults to `./public` if the folder exists, and `./` otherwise.
 
@@ -22,7 +20,7 @@ This will install `http-server` globally so that it may be run from the command 
 
      mkdir myapp
      cd myapp/
-     jitsu install http-server
+     jitsu install cubx-http-server
 
 *If you do not have `jitsu` installed you can install it via `npm install jitsu -g`*
 
@@ -30,7 +28,7 @@ This will install `http-server` globally so that it may be run from the command 
 
 ### Starting http-server locally
 
-     node bin/http-server
+     node bin/cubx-http-server
 
 *Now you can visit http://localhost:8080 to view your server*
 
@@ -63,6 +61,8 @@ This will install `http-server` globally so that it may be run from the command 
 `-U` or `--utc` Use UTC time format in log messages.
 
 `-P` or `--proxy` Proxies all requests which can't be resolved locally to the given url. e.g.: -P http://someurl.com
+
+`-npu` or `--networkProxyUrl`  Add a proxy used to connect to the fallback proxy ([proto]://[host]:[port] e.g. https://10.0.0.0:8000)
 
 `-S` or `--ssl` Enable https.
 

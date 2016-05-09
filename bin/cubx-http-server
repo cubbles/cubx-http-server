@@ -4,21 +4,21 @@
 
 var colors     = require('colors'),
     os         = require('os'),
-    httpServer = require('../lib/http-server'),
+    cubxHttpServer = require('../lib/cubx-http-server'),
     portfinder = require('portfinder'),
     opener     = require('opener'),
     httpProxyAgent  = require('http-proxy-agent'),
     httpsProxyAgent  = require('https-proxy-agent'),
     argv       = require('optimist')
       .boolean('cors')
-      .string('toProxy')
+      .string(['npu', 'networkProxyUrl'])
       .argv;
 
 var ifaces = os.networkInterfaces();
 
 if (argv.h || argv.help) {
   console.log([
-    'usage: http-server [path] [options]',
+    'usage: cubx-http-server [path] [options]',
     '',
     'options:',
     '  -p           Port to use [8080]',
@@ -41,7 +41,7 @@ if (argv.h || argv.help) {
     '  -K --key     Path to ssl key file (default: key.pem).',
     '',
     '  -r --robots  Respond to /robots.txt [User-agent: *\\nDisallow: /]',
-    '  --toProxy    Add a proxy used to connect to the fallback proxy ([proto]://[host]:[port]). Useful for proxying proxies. e.g. https://10.0.0.0:8000',
+    '  --networkProxyUrl    Add a proxy used to connect to the fallback proxy ([proto]://[host]:[port] e.g. https://10.0.0.0:8000)',
     '  -h --help    Print this list and exit.'
   ].join('\n'));
   process.exit();
@@ -52,6 +52,7 @@ var port = argv.p || parseInt(process.env.PORT, 10),
     ssl = !!argv.S || !!argv.ssl,
     proxy = argv.P || argv.proxy,
     utc = argv.U || argv.utc,
+    npu = argv.networkProxyUrl,
     logger;
 
 if (!argv.s && !argv.silent) {
@@ -106,13 +107,13 @@ function listen(port) {
     proxy: proxy
   };
 
-  if(argv.toProxy && proxy) {
+  if(npu && proxy) {
     var proxyAgent;
     if (proxy.indexOf('https') === 0) {
-      proxyAgent = new httpsProxyAgent(argv.toProxy);
+      proxyAgent = new httpsProxyAgent(npu);
       options.agent = proxyAgent;
     } else if (proxy.indexOf('http') === 0) {
-      proxyAgent = new httpProxyAgent(argv.toProxy);
+      proxyAgent = new httpProxyAgent(npu);
       options.agent = proxyAgent;
     }
   }
@@ -131,12 +132,12 @@ function listen(port) {
     };
   }
 
-  var server = httpServer.createServer(options);
+  var server = cubxHttpServer.createServer(options);
   server.listen(port, host, function () {
     var canonicalHost = host === '0.0.0.0' ? '127.0.0.1' : host,
         protocol      = ssl ? 'https://' : 'http://';
 
-    logger.info(['Starting up http-server, serving '.yellow,
+    logger.info(['Starting up cubx-http-server, serving '.yellow,
       server.root.cyan,
       ssl ? (' through'.yellow + ' https'.cyan) : '',
       '\nAvailable on:'.yellow
@@ -174,11 +175,11 @@ if (process.platform === 'win32') {
 }
 
 process.on('SIGINT', function () {
-  logger.info('http-server stopped.'.red);
+  logger.info('cubx-http-server stopped.'.red);
   process.exit();
 });
 
 process.on('SIGTERM', function () {
-  logger.info('http-server stopped.'.red);
+  logger.info('cubx-http-server stopped.'.red);
   process.exit();
 });

@@ -3,14 +3,14 @@ var assert = require('assert'),
     fs = require('fs'),
     vows = require('vows'),
     request = require('request'),
-    httpServer = require('../lib/http-server');
+    cubxHttpServer = require('../lib/cubx-http-server');
 
 var root = path.join(__dirname, 'fixtures', 'root');
 
-vows.describe('http-server').addBatch({
-  'When http-server is listening on 8080': {
+vows.describe('cubx-http-server').addBatch({
+  'When cubx-http-server is listening on 8080': {
     topic: function () {
-      var server = httpServer.createServer({
+      var server = cubxHttpServer.createServer({
         root: root,
         robots: true,
         headers: {
@@ -76,9 +76,9 @@ vows.describe('http-server').addBatch({
         assert.equal(res.headers['access-control-allow-credentials'], 'true');
       }
     },
-    'When http-server is proxying from 8081 to 8080': {
+    'When cubx-http-server is proxying from 8081 to 8080': {
       topic: function () {
-        var proxyServer = httpServer.createServer({
+        var proxyServer = cubxHttpServer.createServer({
           proxy: 'http://127.0.0.1:8080/',
           root: path.join(__dirname, 'fixtures')
         });
@@ -127,7 +127,7 @@ vows.describe('http-server').addBatch({
   },
   'When cors is enabled': {
     topic: function () {
-      var server = httpServer.createServer({
+      var server = cubxHttpServer.createServer({
         root: root,
         cors: true,
         corsHeaders: 'X-Test'

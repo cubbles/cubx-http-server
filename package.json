@@ -2,7 +2,7 @@
   "name": "cubx-http-server",
   "version": "0.1.0",
   "description": "A command line http-server based on the popular http-server npm module extended to be able to add a toProxy.",
-  "main": "./lib/http-server",
+  "main": "./lib/cubx-http-server",
   "repository": {
     "type": "git",
     "url": "https://github.com/cubbles/cubx-http-server"
@@ -12,8 +12,8 @@
     "command"
   ],
   "scripts": {
-    "start": "node ./bin/http-server",
-    "pretest": "common bin/http-server lib/ test",
+    "start": "node ./bin/cubx-http-server",
+    "pretest": "common bin/cubx-http-server lib/ test",
     "test": "vows --spec --isolate"
   },
   "contributors": [
@@ -53,7 +53,7 @@
   "license": "MIT",
   "preferGlobal": "true",
   "bin": {
-    "cubx-http-server": "./bin/http-server",
-    "chs": "./bin/http-server"
+    "cubx-http-server": "./bin/cubx-http-server",
+    "chs": "./bin/cubx-http-server"
   }
 }
