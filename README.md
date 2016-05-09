@@ -48,7 +48,7 @@ This will install `cubx-http-server` globally so that it may be run from the com
 
 `-P` or `--proxy` Proxies all requests which can't be resolved locally to the given url. e.g.: -P http://someurl.com
 
-`-npu` or `--networkProxyUrl`  Add a proxy used to connect to the fallback proxy ([proto]://[host]:[port] e.g. https://10.0.0.0:8000)
+`--networkProxyUrl`  Add a proxy used to connect to the fallback proxy ([proto]://[host]:[port] e.g. https://10.0.0.0:8000)
 
 `-S` or `--ssl` Enable https.
 
