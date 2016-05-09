@@ -7,7 +7,8 @@ var colors     = require('colors'),
     httpServer = require('../lib/http-server'),
     portfinder = require('portfinder'),
     opener     = require('opener'),
-    globalTunnel = require('global-tunnel'),
+    httpProxyAgent  = require('http-proxy-agent'),
+    httpsProxyAgent  = require('https-proxy-agent'),
     argv       = require('optimist')
       .boolean('cors')
       .string('toProxy')
@@ -40,7 +41,7 @@ if (argv.h || argv.help) {
     '  -K --key     Path to ssl key file (default: key.pem).',
     '',
     '  -r --robots  Respond to /robots.txt [User-agent: *\\nDisallow: /]',
-    '  --toProxy    Add a proxy used to connect to the fallback proxy ([proto]:[host]:[port]). Useful for proxying proxies. e.g. https:10.0.0.0:8000',
+    '  --toProxy    Add a proxy used to connect to the fallback proxy ([proto]://[host]:[port]). Useful for proxying proxies. e.g. https://10.0.0.0:8000',
     '  -h --help    Print this list and exit.'
   ].join('\n'));
   process.exit();
@@ -105,18 +106,15 @@ function listen(port) {
     proxy: proxy
   };
 
-  if(argv.toProxy) {
-    var toProxy = argv.toProxy;
-    var proxyProto = toProxy.split('://')[0];
-    var proxyHost = toProxy.split('://')[1].split(':')[0];
-    var proxyPort = toProxy.split('://')[1].split(':')[1];
-
-    globalTunnel.initialize({
-      protocol: proxyProto,
-      host: proxyHost,
-      port: proxyPort,
-      tunnel: 'both'
-    })
+  if(argv.toProxy && proxy) {
+    var proxyAgent;
+    if (proxy.indexOf('https') === 0) {
+      proxyAgent = new httpsProxyAgent(argv.toProxy);
+      options.agent = proxyAgent;
+    } else if (proxy.indexOf('http') === 0) {
+      proxyAgent = new httpProxyAgent(argv.toProxy);
+      options.agent = proxyAgent;
+    }
   }
 
   if (argv.cors) {

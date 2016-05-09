@@ -1,6 +1,6 @@
 {
   "name": "cubx-http-server",
-  "version": "0.8.5",
+  "version": "0.1.0",
   "description": "A command line http-server based on the popular http-server npm module extended to be able to add a toProxy.",
   "main": "./lib/http-server",
   "repository": {
@@ -18,47 +18,16 @@
   },
   "contributors": [
     {
-      "name": "Charlie Robbins",
-      "email": "charlie.robbins@gmail.com"
-    },
-    {
-      "name": "Marak Squires",
-      "email": "marak.squires@gmail.com"
-    },
-    {
-      "name": "Charlie McConnell",
-      "email": "charlie@charlieistheman.com"
-    },
-    {
-      "name": "Joshua Holbrook",
-      "email": "josh.holbrook@gmail.com"
-    },
-    {
-      "name": "Maciej Małecki",
-      "email": "maciej.malecki@notimplemented.org"
-    },
-    {
-      "name": "Matthew Bergman",
-      "email": "mzbphoto@gmail.com"
-    },
-    {
-      "name": "brad dunbar",
-      "email": "dunbarb2@gmail.com"
-    },
-    {
-      "name": "Dominic Tarr"
-    },
-    {
-      "name": "Travis Person",
-      "email": "travis.person@gmail.com"
-    },
-    {
-      "name": "Jinkwon Lee",
-      "email": "master@bdyne.net"
-    },
-    {
       "name": "Philipp Wagner",
       "email": "philipp.wagner@incowia.com"
+    },
+    {
+      "name": "Hans-Dieter Böhlau",
+      "email": "hans-dieter.boehlau@incowia.com"
+    },
+    {
+      "name": "Judit Roß",
+      "email": "Judit.Ross@incowia.com"
     }
   ],
   "dependencies": {
@@ -70,7 +39,8 @@
     "portfinder": "0.4.x",
     "opener": "~1.4.0",
     "corser": "~2.0.0",
-    "global-tunnel": "^1.2.0"
+    "http-proxy-agent": "^1.0.0",
+    "https-proxy-agent": "^1.0.0"
   },
   "devDependencies": {
     "common-style": "^3.0.0",
