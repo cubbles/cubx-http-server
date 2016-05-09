@@ -1,7 +1,7 @@
 {
   "name": "cubx-http-server",
   "version": "0.1.0",
-  "description": "A command line http-server based on the popular http-server npm module extended to be able to add a toProxy.",
+  "description": "A command line http-server based on the popular http-server npm module able to work behind proxy.",
   "main": "./lib/cubx-http-server",
   "repository": {
     "type": "git",
