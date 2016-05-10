@@ -7,8 +7,6 @@ var colors     = require('colors'),
     cubxHttpServer = require('../lib/cubx-http-server'),
     portfinder = require('portfinder'),
     opener     = require('opener'),
-    httpProxyAgent  = require('http-proxy-agent'),
-    httpsProxyAgent  = require('https-proxy-agent'),
     argv       = require('optimist')
       .boolean('cors')
       .string(['npu', 'networkProxyUrl'])
@@ -104,19 +102,9 @@ function listen(port) {
     robots: argv.r || argv.robots,
     ext: argv.e || argv.ext,
     logFn: logger.request,
-    proxy: proxy
+    proxy: proxy,
+    npu: npu
   };
-
-  if(npu && proxy) {
-    var proxyAgent;
-    if (proxy.indexOf('https') === 0) {
-      proxyAgent = new httpsProxyAgent(npu);
-      options.agent = proxyAgent;
-    } else if (proxy.indexOf('http') === 0) {
-      proxyAgent = new httpProxyAgent(npu);
-      options.agent = proxyAgent;
-    }
-  }
 
   if (argv.cors) {
     options.cors = true;
