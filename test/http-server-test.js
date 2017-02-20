@@ -1,9 +1,9 @@
-var assert = require('assert'),
-    path = require('path'),
-    fs = require('fs'),
-    vows = require('vows'),
-    request = require('request'),
-    cubxHttpServer = require('../lib/cubx-http-server');
+var assert = require('assert');
+var path = require('path');
+var fs = require('fs');
+var vows = require('vows');
+var request = require('request');
+var cubxHttpServer = require('../lib/cubx-http-server');
 
 var root = path.join(__dirname, 'fixtures', 'root');
 
@@ -36,7 +36,7 @@ vows.describe('cubx-http-server').addBatch({
             self.callback(err, data, body);
           });
         },
-        'should match content of served file': function (err, file, body) {
+        'should match content of served file': function (err, file, body) { // eslint-disable-line handle-callback-err
           assert.equal(body.trim(), file.trim());
         }
       }
@@ -53,7 +53,7 @@ vows.describe('cubx-http-server').addBatch({
       topic: function () {
         request('http://127.0.0.1:8080/', this.callback);
       },
-      'should respond with index': function (err, res, body) {
+      'should respond with index': function (err, res, body) { // eslint-disable-line handle-callback-err
         assert.equal(res.statusCode, 200);
         assert.include(body, '/file');
         assert.include(body, '/canYouSeeMe');
@@ -71,9 +71,9 @@ vows.describe('cubx-http-server').addBatch({
       topic: function () {
         request('http://127.0.0.1:8080/', this.callback);
       },
-      'should respond with headers set in options': function (err, res) {
-        assert.equal(res.headers['access-control-allow-origin'], '*');
-        assert.equal(res.headers['access-control-allow-credentials'], 'true');
+      'should respond with headers set in options': function (err, res) { // eslint-disable-line handle-callback-err
+        assert.equal(res.headers[ 'access-control-allow-origin' ], '*');
+        assert.equal(res.headers[ 'access-control-allow-credentials' ], 'true');
       }
     },
     'When cubx-http-server is proxying from 8081 to 8080': {
@@ -99,7 +99,7 @@ vows.describe('cubx-http-server').addBatch({
               self.callback(err, data, body);
             });
           },
-          'should match content of the served file': function (err, file, body) {
+          'should match content of the served file': function (err, file, body) { // eslint-disable-line handle-callback-err
             assert.equal(body.trim(), file.trim());
           }
         }
@@ -118,7 +118,7 @@ vows.describe('cubx-http-server').addBatch({
               self.callback(err, data, body);
             });
           },
-          'should match content of the proxied served file': function (err, file, body) {
+          'should match content of the proxied served file': function (err, file, body) { // eslint-disable-line handle-callback-err
             assert.equal(body.trim(), file.trim());
           }
         }
@@ -147,11 +147,11 @@ vows.describe('cubx-http-server').addBatch({
           }
         }, this.callback);
       },
-      'status code should be 204': function (err, res) {
+      'status code should be 204': function (err, res) { // eslint-disable-line handle-callback-err
         assert.equal(res.statusCode, 204);
       },
-      'response Access-Control-Allow-Headers should contain X-Test': function (err, res) {
-        assert.ok(res.headers['access-control-allow-headers'].split(/\s*,\s*/g).indexOf('X-Test') >= 0, 204);
+      'response Access-Control-Allow-Headers should contain X-Test': function (err, res) { // eslint-disable-line handle-callback-err
+        assert.ok(res.headers[ 'access-control-allow-headers' ].split(/\s*,\s*/g).indexOf('X-Test') >= 0, 204);
       }
     }
   }

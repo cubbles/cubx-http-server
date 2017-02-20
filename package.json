@@ -44,6 +44,10 @@
   },
   "devDependencies": {
     "common-style": "^3.0.0",
+    "eslint": "^3.15.0",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-promise": "^3.4.2",
+    "eslint-plugin-standard": "^2.0.1",
     "request": "2.49.x",
     "vows": "0.7.x"
   },
@@ -51,7 +55,7 @@
     "url": "https://github.com/cubbles/cubx-http-server/issues"
   },
   "license": "MIT",
-  "preferGlobal": "true",
+  "preferGlobal": true,
   "bin": {
     "cubx-http-server": "./bin/cubx-http-server",
     "chs": "./bin/cubx-http-server"

@@ -59,3 +59,28 @@ This will install `cubx-http-server` globally so that it may be run from the com
 `-r` or `--robots` Provide a /robots.txt (whose content defaults to 'User-agent: *\nDisallow: /')
 
 `-h` or `--help` Print this list and exit.
+
+## configure network proxy by enviroment variables
+    
+The following environment variables are respected `:
+
+ * `HTTP_PROXY` / `http_proxy`
+ * `HTTPS_PROXY` / `https_proxy`
+ * `NO_PROXY` / `no_proxy`
+
+When `HTTP_PROXY` / `http_proxy` are set, they will be used to proxy non-SSL requests that do not have an explicit `proxy` configuration option present. 
+Similarly, `HTTPS_PROXY` / `https_proxy` will be respected for SSL requests that do not have an explicit `proxy` configuration option. 
+    
+    export http_proxy=http://myProxy:80
+    export https_proxy=https://myHttpsProxy:443
+
+The `cubx-http-server` is also aware of the `NO_PROXY`/`no_proxy` environment variables. These variables provide a granular way to opt out of network proxying, on a per-host basis. 
+It should contain a comma separated list of hosts to opt out of proxying. It is also possible to opt of proxying when a particular destination port is used. 
+Finally, the variable may be set to `*` to opt out of the implicit proxy configuration of the other environment variables.
+
+Here's some examples of valid `no_proxy` values:
+
+ * `google.com` - don't proxy HTTP/HTTPS requests to Google.
+ * `google.com:443` - don't proxy HTTPS requests to Google, but *do* proxy HTTP requests to Google.
+ * `google.com:443, yahoo.com:80` - don't proxy HTTPS requests to Google, and don't proxy HTTP requests to Yahoo!
+ * `*` - ignore `https_proxy`/`http_proxy` environment variables altogether.
