@@ -14,7 +14,8 @@
   "scripts": {
     "start": "node ./bin/cubx-http-server",
     "lint": "eslint bin/cubx-http-server lib/ test",
-    "test": "vows --spec --isolate"
+    "test": "vows --spec --isolate",
+    "prepublishOnly": "npm run lint"
   },
   "contributors": [
     {

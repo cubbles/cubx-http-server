@@ -2,17 +2,17 @@
 
 'use strict';
 
-var colors     = require('colors'),
-    os         = require('os'),
-    cubxHttpServer = require('../lib/cubx-http-server'),
-    portfinder = require('portfinder'),
-    opener     = require('opener'),
-    argv       = require('optimist')
-      .boolean('cors')
-      .string(['npu', 'networkProxyUrl'])
-      .argv;
+const colors = require('colors');
+const os = require('os');
+const cubxHttpServer = require('../lib/cubx-http-server');
+const portfinder = require('portfinder');
+const opener = require('opener');
+const argv = require('optimist')
+  .boolean('cors')
+  .string(['npu', 'networkProxyUrl'])
+  .argv;
 
-var ifaces = os.networkInterfaces();
+const ifaces = os.networkInterfaces();
 
 if (argv.h || argv.help) {
   console.log([
@@ -45,27 +45,26 @@ if (argv.h || argv.help) {
   process.exit();
 }
 
-var port = argv.p || parseInt(process.env.PORT, 10),
-    host = argv.a || '0.0.0.0',
-    ssl = !!argv.S || !!argv.ssl,
-    proxy = argv.P || argv.proxy,
-    utc = argv.U || argv.utc,
-    npu = argv.networkProxyUrl,
-    logger;
+const port = argv.p || parseInt(process.env.PORT, 10);
+const host = argv.a || '0.0.0.0';
+const ssl = !!argv.S || !!argv.ssl;
+const proxy = argv.P || argv.proxy;
+const utc = argv.U || argv.utc;
+const npu = argv.networkProxyUrl;
+let logger;
 
 if (!argv.s && !argv.silent) {
   logger = {
     info: console.log,
     request: function (req, res, error) {
-      var date = utc ? new Date().toUTCString() : new Date();
+      const date = utc ? new Date().toUTCString() : new Date();
       if (error) {
         logger.info(
           '[%s] "%s %s" Error (%s): "%s"',
           date, req.method.red, req.url.red,
           error.status.toString().red, error.message.red
         );
-      }
-      else {
+      } else {
         logger.info(
           '[%s] "%s %s" "%s"',
           date, req.method.cyan, req.url.cyan,
@@ -74,27 +73,29 @@ if (!argv.s && !argv.silent) {
       }
     }
   };
-}
-else if (colors) {
+} else if (colors) {
   logger = {
-    info: function () {},
-    request: function () {}
+    info: function () {
+    },
+    request: function () {
+    }
   };
 }
 
 if (!port) {
   portfinder.basePort = 8080;
   portfinder.getPort(function (err, port) {
-    if (err) { throw err; }
+    if (err) {
+      throw err;
+    }
     listen(port);
   });
-}
-else {
+} else {
   listen(port);
 }
 
-function listen(port) {
-  var options = {
+function listen (port) {
+  const options = {
     root: argv._[0],
     cache: argv.c,
     showDir: argv.d,
@@ -120,10 +121,10 @@ function listen(port) {
     };
   }
 
-  var server = cubxHttpServer.createServer(options);
+  const server = cubxHttpServer.createServer(options);
   server.listen(port, host, function () {
-    var canonicalHost = host === '0.0.0.0' ? '127.0.0.1' : host,
-        protocol      = ssl ? 'https://' : 'http://';
+    const canonicalHost = host === '0.0.0.0' ? '127.0.0.1' : host;
+    const protocol = ssl ? 'https://' : 'http://';
 
     logger.info(['Starting up cubx-http-server, serving '.yellow,
       server.root.cyan,

@@ -1,16 +1,16 @@
-var assert = require('assert');
-var path = require('path');
-var fs = require('fs');
-var vows = require('vows');
-var request = require('request');
-var cubxHttpServer = require('../lib/cubx-http-server');
+const assert = require('assert');
+const path = require('path');
+const fs = require('fs');
+const vows = require('vows');
+const request = require('request');
+const cubxHttpServer = require('../lib/cubx-http-server');
 
-var root = path.join(__dirname, 'fixtures', 'root');
+const root = path.join(__dirname, 'fixtures', 'root');
 
 vows.describe('cubx-http-server').addBatch({
   'When cubx-http-server is listening on 8080': {
     topic: function () {
-      var server = cubxHttpServer.createServer({
+      const server = cubxHttpServer.createServer({
         root: root,
         robots: true,
         headers: {
@@ -31,12 +31,13 @@ vows.describe('cubx-http-server').addBatch({
       },
       'and file content': {
         topic: function (res, body) {
-          var self = this;
+          const self = this;
           fs.readFile(path.join(root, 'file'), 'utf8', function (err, data) {
             self.callback(err, data, body);
           });
         },
-        'should match content of served file': function (err, file, body) { // eslint-disable-line handle-callback-err
+        'should match content of served file': (err, file, body) => {
+          assert(err, undefined);
           assert.equal(body.trim(), file.trim());
         }
       }
@@ -53,7 +54,8 @@ vows.describe('cubx-http-server').addBatch({
       topic: function () {
         request('http://127.0.0.1:8080/', this.callback);
       },
-      'should respond with index': function (err, res, body) { // eslint-disable-line handle-callback-err
+      'should respond with index': (err, res, body) => {
+        assert(err, undefined);
         assert.equal(res.statusCode, 200);
         assert.include(body, '/file');
         assert.include(body, '/canYouSeeMe');
@@ -71,14 +73,15 @@ vows.describe('cubx-http-server').addBatch({
       topic: function () {
         request('http://127.0.0.1:8080/', this.callback);
       },
-      'should respond with headers set in options': function (err, res) { // eslint-disable-line handle-callback-err
-        assert.equal(res.headers[ 'access-control-allow-origin' ], '*');
-        assert.equal(res.headers[ 'access-control-allow-credentials' ], 'true');
+      'should respond with headers set in options': (err, res) => {
+        assert(err, undefined);
+        assert.equal(res.headers['access-control-allow-origin'], '*');
+        assert.equal(res.headers['access-control-allow-credentials'], 'true');
       }
     },
     'When cubx-http-server is proxying from 8081 to 8080': {
       topic: function () {
-        var proxyServer = cubxHttpServer.createServer({
+        const proxyServer = cubxHttpServer.createServer({
           proxy: 'http://127.0.0.1:8080/',
           root: path.join(__dirname, 'fixtures')
         });
@@ -94,12 +97,13 @@ vows.describe('cubx-http-server').addBatch({
         },
         'and file content': {
           topic: function (res, body) {
-            var self = this;
+            const self = this;
             fs.readFile(path.join(root, 'file'), 'utf8', function (err, data) {
               self.callback(err, data, body);
             });
           },
-          'should match content of the served file': function (err, file, body) { // eslint-disable-line handle-callback-err
+          'should match content of the served file': (err, file, body) => {
+            assert(err, undefined);
             assert.equal(body.trim(), file.trim());
           }
         }
@@ -113,12 +117,13 @@ vows.describe('cubx-http-server').addBatch({
         },
         'and file content': {
           topic: function (res, body) {
-            var self = this;
+            const self = this;
             fs.readFile(path.join(root, 'file'), 'utf8', function (err, data) {
               self.callback(err, data, body);
             });
           },
-          'should match content of the proxied served file': function (err, file, body) { // eslint-disable-line handle-callback-err
+          'should match content of the proxied served file': (err, file, body) => {
+            assert(err, undefined);
             assert.equal(body.trim(), file.trim());
           }
         }
@@ -127,7 +132,7 @@ vows.describe('cubx-http-server').addBatch({
   },
   'When cors is enabled': {
     topic: function () {
-      var server = cubxHttpServer.createServer({
+      const server = cubxHttpServer.createServer({
         root: root,
         cors: true,
         corsHeaders: 'X-Test'
@@ -147,11 +152,13 @@ vows.describe('cubx-http-server').addBatch({
           }
         }, this.callback);
       },
-      'status code should be 204': function (err, res) { // eslint-disable-line handle-callback-err
+      'status code should be 204': (err, res) => { // eslint-disable-line handle-callback-err
+        assert(err, undefined);
         assert.equal(res.statusCode, 204);
       },
-      'response Access-Control-Allow-Headers should contain X-Test': function (err, res) { // eslint-disable-line handle-callback-err
-        assert.ok(res.headers[ 'access-control-allow-headers' ].split(/\s*,\s*/g).indexOf('X-Test') >= 0, 204);
+      'response Access-Control-Allow-Headers should contain X-Test': (err, res) => {
+        assert(err, undefined);
+        assert.ok(res.headers['access-control-allow-headers'].split(/\s*,\s*/g).indexOf('X-Test') >= 0, 204);
       }
     }
   }

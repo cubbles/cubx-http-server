@@ -1,16 +1,16 @@
 'use strict';
-var assert = require('assert');
-var vows = require('vows');
-var request = require('request');
-var cubxHttpServer = require('../lib/cubx-http-server');
-var path = require('path');
+const assert = require('assert');
+const vows = require('vows');
+const request = require('request');
+const cubxHttpServer = require('../lib/cubx-http-server');
+const path = require('path');
 
-var root = path.join(__dirname, 'fixtures', 'root');
+const root = path.join(__dirname, 'fixtures', 'root');
 
 vows.describe('cubx.core-simulated-remover').addBatch({
   'When cubx-http-server is listening on 8080 and the request included a localstore': {
     topic: function () {
-      var server = cubxHttpServer.createServer({
+      const server = cubxHttpServer.createServer({
         root: root,
         robots: true,
         headers: {
